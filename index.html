@@ -1966,6 +1966,12 @@
     let current = 0;
     let ghostFrame = null;
 
+    function getInitialSlide() {
+      const requestedSlide = Number.parseInt(new URLSearchParams(window.location.search).get("slide"), 10);
+      if (!Number.isFinite(requestedSlide)) return 0;
+      return Math.min(Math.max(requestedSlide - 1, 0), slides.length - 1);
+    }
+
     function updateSlide(index) {
       if (index < 0 || index >= slides.length) return;
       slides[current].classList.remove("active");
@@ -2106,7 +2112,7 @@
       }
     });
 
-    updateSlide(0);
+    updateSlide(getInitialSlide());
   </script>
 </body>
 </html>
