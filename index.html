@@ -1613,11 +1613,11 @@
             <span class="subword">AI-Driven Development Lifecycle</span>
           </h2>
           <p class="lead">
-            이 페이지는 핵심 키워드 나열이 아니라,
-            <span class="break">AI-DLC 하나를 이해하기 위한 설명이다.</span>
-            <span class="break">AI-DLC는 “코드 몇 줄 추천”이 아니라,</span>
-            <span class="break">기획에서 개발, 테스트, 운영까지</span>
-            <span class="break">소프트웨어 개발 주기를 다시 짜는 방식이다.</span>
+            AI-DLC는 AI-Driven Development Lifecycle의 약자로,
+            <span class="break">요구사항 정의, 설계, 구현, 테스트, 운영 전 과정을</span>
+            <span class="break">AI 에이전트와 사람이 함께 반복하는 개발 방식이다.</span>
+            <span class="break">핵심은 코드 자동완성보다 앞단의 맥락과 기준을 먼저 정리하고,</span>
+            <span class="break">그 기준으로 코드, 테스트, 배포 품질을 계속 검증하는 데 있다.</span>
           </p>
           <p class="source">Source: AWS Summit Seoul 2026 AI-DLC Challenge, ChosunBiz/FNNews.</p>
         </div>
@@ -1697,6 +1697,7 @@
         </div>
         <div class="kiro-visual-grid">
           <div class="kiro-mascot-card" aria-label="Kiro mascot character card">
+            <img class="kiro-ghost" src="assets/images/kiro-ghost.png" alt="" aria-hidden="true">
             <div class="kiro-mascot-copy">
               <h3>귀엽지만,<span class="break magenta">일은 체계적으로.</span></h3>
               <p>
@@ -1992,9 +1993,10 @@
 
     function openLightbox(trigger) {
       const image = trigger.querySelector("img");
+      if (!image) return;
       lightboxImage.src = trigger.dataset.zoomSrc || image.src;
       lightboxImage.alt = image.alt;
-      lightboxCaption.textContent = trigger.dataset.zoomCaption || "";
+      lightboxCaption.textContent = getZoomCaption(trigger, image);
       lightbox.hidden = false;
       lightboxClose.focus();
     }
@@ -2052,18 +2054,50 @@
       kiroLiveEyesLayer.style.transform = "translate(0px, 0px)";
     }
 
+    function getZoomCaption(trigger, image) {
+      const captionNode = trigger.querySelector("figcaption, .photo-caption");
+      const directSpan = Array.from(trigger.children).find((child) => child.tagName === "SPAN");
+      return trigger.dataset.zoomCaption
+        || captionNode?.textContent.trim()
+        || directSpan?.textContent.trim()
+        || image.alt
+        || "";
+    }
+
+    function initZoomableImages() {
+      const imageTargets = document.querySelectorAll([
+        ".zoomable",
+        ".photo-card",
+        ".info-photo",
+        ".quick-screenshot",
+        ".physical-photo",
+        ".photo-strip figure"
+      ].join(", "));
+
+      imageTargets.forEach((item) => {
+        const image = item.querySelector("img");
+        if (!image) return;
+
+        const caption = getZoomCaption(item, image) || "이미지";
+        item.classList.add("zoomable");
+        if (!item.hasAttribute("role")) item.setAttribute("role", "button");
+        if (!item.hasAttribute("tabindex")) item.setAttribute("tabindex", "0");
+        if (!item.hasAttribute("aria-label")) item.setAttribute("aria-label", `${caption} 확대`);
+
+        item.addEventListener("click", () => openLightbox(item));
+        item.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openLightbox(item);
+          }
+        });
+      });
+    }
+
     document.getElementById("next").addEventListener("click", nextSlide);
     document.getElementById("prev").addEventListener("click", previousSlide);
 
-    document.querySelectorAll(".slide[data-title='AWS Kiro'] .zoomable").forEach((item) => {
-      item.addEventListener("click", () => openLightbox(item));
-      item.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          openLightbox(item);
-        }
-      });
-    });
+    initZoomableImages();
 
     lightboxClose.addEventListener("click", closeLightbox);
     lightbox.addEventListener("click", (event) => {
