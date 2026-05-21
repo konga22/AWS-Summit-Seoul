@@ -529,8 +529,32 @@
       font-size: 16px;
     }
 
-    .slide[data-title="Use AWS"] .step .label {
+    .slide[data-title="Use AWS"] .step .label,
+    .slide[data-title="Build plan"] .step .label {
       font-size: 20px;
+    }
+
+    .slide[data-title="AWS Kiro"] .two-col {
+      grid-template-columns: 0.92fr 1.08fr;
+    }
+
+    .slide[data-title="AWS Kiro"] .keyword-title {
+      font-size: 78px;
+    }
+
+    .slide[data-title="AWS Kiro"] .lead {
+      font-size: 18px;
+      line-height: 1.38;
+    }
+
+    .slide[data-title="AWS Kiro"] .source {
+      margin-top: 0;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    .slide[data-title="AWS Kiro"] .diff-row {
+      padding: 12px 14px;
     }
 
     .slide[data-title="AI-DLC difference"] .title.small {
@@ -668,6 +692,75 @@
       font-weight: 700;
     }
 
+    .kiro-visual-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .kiro-shot {
+      position: relative;
+      height: 202px;
+      overflow: hidden;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .kiro-shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.05) contrast(1.04);
+    }
+
+    .kiro-shot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(5, 2, 13, 0.68), transparent 48%);
+      pointer-events: none;
+    }
+
+    .kiro-shot span {
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      z-index: 2;
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .kiro-diff {
+      display: grid;
+      gap: 12px;
+    }
+
+    .diff-row {
+      padding: 13px 15px;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .diff-row strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--magenta);
+      font-size: 18px;
+      line-height: 1.15;
+      font-weight: 950;
+    }
+
+    .diff-row p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.46;
+      font-weight: 650;
+    }
+
     .nav {
       position: fixed;
       left: 50%;
@@ -796,6 +889,18 @@
       .metric b {
         font-size: 36px;
       }
+
+      .kiro-shot {
+        height: 202px;
+      }
+
+      .kiro-diff {
+        gap: 10px;
+      }
+
+      .diff-row {
+        padding: 14px;
+      }
     }
 
     @media (max-width: 900px) {
@@ -828,7 +933,8 @@
       .card-grid.four,
       .photo-strip,
       .compare-grid,
-      .metric-grid {
+      .metric-grid,
+      .kiro-visual-grid {
         grid-template-columns: 1fr;
       }
 
@@ -868,7 +974,10 @@
           <span class="break">AWS Summit Seoul 2026</span>
           <span class="break magenta">다녀온 후기</span>
         </h1>
-        <p class="lead" style="max-width: 760px;">현장 사진의 분위기를 살리면서, 키노트에서 나온 AI-DLC, Amazon Quick, AWS Kiro를 처음 보는 사람도 이해할 수 있게 정리한다.</p>
+        <p class="lead" style="max-width: 760px;">
+          현장에서 본 빛과 규모감 위에,
+          <span class="break">AI가 개발과 업무를 어떻게 바꾸는지 정리한 기록.</span>
+        </p>
         <div class="chips">
           <span class="chip">AI-DLC</span>
           <span class="chip">Amazon Quick</span>
@@ -889,7 +998,8 @@
           <div class="eyebrow">AWS Summit Seoul이란?</div>
           <h2 class="title small">
             <span class="break">AI와 클라우드가 산업 현장에서</span>
-            <span class="break">어떻게 쓰이는지 보여주는 AWS의 대형 컨퍼런스.</span>
+            <span class="break">어떻게 쓰이는지 보여주는</span>
+            <span class="break">AWS의 대형 컨퍼런스.</span>
           </h2>
           <div class="stack" style="gap: 12px;">
             <div class="stat"><b>2일</b><span>2026년 5월 20일-21일, 코엑스에서 진행.</span></div>
@@ -914,7 +1024,8 @@
             <span class="break magenta">일하는 방식 전체로 확장된다.</span>
           </h2>
           <p class="lead">
-            함기호 AWS Korea 대표는 생성형 AI가 Agentic AI, AI-DLC, Physical AI로 확장된다고 설명했다.
+            함기호 AWS Korea 대표는 생성형 AI가 Agentic AI, AI-DLC, Physical AI로
+            <span class="break">확장된다고 설명했다.</span>
           </p>
         </div>
         <div class="card-grid">
@@ -926,16 +1037,18 @@
     </section>
 
     <section class="slide" data-title="AI-DLC overview">
-      <div class="meta"><strong>KEYNOTE 01</strong><span>04 / 14</span></div>
+      <div class="meta"><strong>AI-DLC DEEP DIVE</strong><span>04 / 14</span></div>
       <div class="canvas wide two-col">
         <div class="stack">
-          <div class="eyebrow">가장 중요한 키워드</div>
+          <div class="eyebrow">연설 키워드 중 첫 번째를 깊게 보기</div>
           <h2 class="keyword-title">
             AI-DLC
             <span class="subword">AI-Driven Development Lifecycle</span>
           </h2>
           <p class="lead">
-            AI-DLC는 “AI가 코드 몇 줄을 추천한다”가 아니라,
+            이 페이지는 핵심 키워드 나열이 아니라,
+            <span class="break">AI-DLC 하나를 이해하기 위한 설명이다.</span>
+            <span class="break">AI-DLC는 “AI가 코드 몇 줄을 추천한다”가 아니라,</span>
             <span class="break">기획에서 개발, 테스트, 운영까지</span>
             <span class="break">소프트웨어 개발 주기를 다시 짜는 방식이다.</span>
           </p>
@@ -983,13 +1096,7 @@
 
     <section class="slide" data-title="AWS Kiro">
       <div class="meta"><strong>KEYNOTE 02</strong><span>06 / 14</span></div>
-      <div class="canvas wide two-col reverse">
-        <div class="card-grid two">
-          <article class="card highlight"><h3>Spec First</h3><p>요구사항, 설계, 작업 목록을 먼저 만들고 코드로 들어간다.</p></article>
-          <article class="card"><h3>Viable Code</h3><p>빠른 프로토타입을 실제 운영 가능한 코드로 밀어붙이는 구조.</p></article>
-          <article class="card"><h3>Hooks</h3><p>테스트, 문서화, 규칙 확인 같은 반복 작업을 자동 실행.</p></article>
-          <article class="card"><h3>Steering</h3><p>팀의 코딩 규칙과 프로젝트 맥락을 AI가 계속 참고하게 한다.</p></article>
-        </div>
+      <div class="canvas wide two-col">
         <div class="stack">
           <div class="eyebrow">AWS Kiro</div>
           <h2 class="keyword-title">
@@ -997,11 +1104,26 @@
             <span class="subword">Spec-driven Agentic IDE</span>
           </h2>
           <p class="lead">
-            Kiro는 “일단 만들어줘”가 아니라,
-            <span class="break">요구사항과 설계를 먼저 정리하고,</span>
-            <span class="break">그 스펙을 기준으로 코드와 테스트를 만드는 개발 도구다.</span>
+            다른 AI 코딩 도구가 “코드 생성”에 강하다면,
+            <span class="break">Kiro는 요구사항, 설계, 작업 목록을 먼저 만들고,</span>
+            <span class="break">그 스펙을 기준으로 코드와 테스트를 밀어붙인다.</span>
           </p>
+          <div class="kiro-diff">
+            <div class="diff-row"><strong>1. Vibe coding의 약점 보완</strong><p>막 만들고 나중에 정리하는 방식이 아니라, 의도와 기준을 문서로 남긴다.</p></div>
+            <div class="diff-row"><strong>2. requirements → design → tasks</strong><p>아이디어를 요구사항, 설계 문서, 실행 가능한 작업 목록으로 쪼갠다.</p></div>
+            <div class="diff-row"><strong>3. Hooks와 Steering</strong><p>테스트, 문서화, 팀 규칙 같은 반복 작업을 자동화하고 프로젝트 기준을 유지한다.</p></div>
+          </div>
           <p class="source">Source: AWS Kiro documentation, Kiro FAQ, AWS Builder Center.</p>
+        </div>
+        <div class="kiro-visual-grid">
+          <figure class="kiro-shot">
+            <img src="assets/images/kiro-spec-tasks.png" alt="Kiro spec task list screenshot">
+            <span>Kiro Specs: requirements, design, task list</span>
+          </figure>
+          <figure class="kiro-shot">
+            <img src="assets/images/kiro-agent-hooks.png" alt="Kiro agent hooks screenshot">
+            <span>Kiro Agent Hooks: 반복 작업 자동화</span>
+          </figure>
         </div>
       </div>
     </section>
@@ -1016,7 +1138,8 @@
             <span class="subword">Work AI Assistant</span>
           </h2>
           <p class="lead">
-            Quick은 회사 안에 흩어진 파일, 메일, 캘린더, Slack, CRM 데이터를 연결해서,
+            Quick은 회사 안에 흩어진
+            <span class="break">파일, 메일, 캘린더, Slack, CRM 데이터를 연결해서,</span>
             <span class="break">질문에 답하는 것을 넘어</span>
             <span class="break">문서 작성, 요약, 후속 조치까지 실행하는 AI다.</span>
           </p>
@@ -1042,8 +1165,10 @@
         <div class="stack">
           <div class="eyebrow">실제 고객 사례 · 3M</div>
           <h2 class="title">
-            <span class="break">3M은 영업 데이터가 여러 시스템에 흩어져 있어서,</span>
-            <span class="break magenta">Quick Suite로 인사이트를 합성하고 업무를 자동화한다.</span>
+            <span class="break">3M은 영업 데이터가</span>
+            <span class="break">여러 시스템에 흩어져 있어서,</span>
+            <span class="break magenta">Quick Suite로 인사이트를 합성하고</span>
+            <span class="break magenta">업무를 자동화한다.</span>
           </h2>
           <p class="lead">
             공식 고객 사례에 따르면 3M은 영업 효과, 위험, 가격 관련 정보를 빠르게 합성하고,
@@ -1075,7 +1200,8 @@
             <span class="break magenta">업무를 수행하는 에이전트로 이동한다.</span>
           </h2>
           <p class="lead">
-            Upstage 김성훈 대표는 기업에서 에이전트를 바로 쓰기 어려운 이유로
+            Upstage 김성훈 대표는 기업에서
+            <span class="break">에이전트를 바로 쓰기 어려운 이유로</span>
             <span class="break">재현 가능성, 설명 가능성, 오류 수정 가능한 프로세스를 강조했다.</span>
           </p>
           <p class="source">Source: ChosunBiz, News1/FNNews.</p>
@@ -1093,7 +1219,8 @@
             <span class="break magenta">로봇과 제조 현장으로 확장된다.</span>
           </h2>
           <p class="lead">
-            함기호 AWS Korea 대표는 한국이 AI 칩 설계, 로봇 파운데이션 모델, 로봇 제조 생태계를 가진 나라라,
+            함기호 AWS Korea 대표는
+            <span class="break">한국이 AI 칩 설계, 로봇 파운데이션 모델, 로봇 제조 생태계를 가진 나라라,</span>
             <span class="break">피지컬 AI에서 잠재력이 크다고 강조했다.</span>
           </p>
         </div>
@@ -1117,7 +1244,8 @@
           <div class="eyebrow">Expo에서 보인 흐름</div>
           <h2 class="title small">
             <span class="break">AI는 데모 영상이 아니라,</span>
-            <span class="break">라이브 커머스, 매장 분석, 제조, 보안 같은 실제 업무로 들어가고 있었다.</span>
+            <span class="break">라이브 커머스, 매장 분석, 제조, 보안 같은</span>
+            <span class="break">실제 업무로 들어가고 있었다.</span>
           </h2>
           <ul class="list">
             <li>Typecast는 AI 음성/영상 제작 데모로 실시간 반응형 가상 진행자를 보여줬다.</li>

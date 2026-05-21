@@ -123,6 +123,7 @@ https://www.aws-summit-review.com
 
 - AWS Summit Seoul 2026 공식 페이지
 - AWS Kiro 공식 문서 및 FAQ
+- Kiro 공식 웹사이트 이미지: Specs/Tasks, Agent Hooks 화면
 - Amazon Quick / Amazon Quick Suite 공식 페이지
 - Amazon Quick 고객 사례 페이지: 3M
 - Amazon Q Developer 고객 사례 페이지
