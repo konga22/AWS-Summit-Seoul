@@ -217,6 +217,12 @@
       display: block;
     }
 
+    .title .break,
+    .lead .break,
+    .keyword-title .break {
+      white-space: nowrap;
+    }
+
     .photo-bg,
     .photo-card img,
     .photo-strip img {
@@ -570,6 +576,32 @@
     .slide[data-title="AI-DLC difference"] .metric {
       min-height: 134px;
       padding: 16px;
+    }
+
+    .slide[data-title="Keynote map"] .two-col,
+    .slide[data-title="Amazon Quick"] .two-col,
+    .slide[data-title="Agentic AI"] .two-col,
+    .slide[data-title="Physical AI"] .two-col {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+
+    .slide[data-title="Keynote map"] .title,
+    .slide[data-title="Agentic AI"] .title,
+    .slide[data-title="Physical AI"] .title {
+      font-size: 54px;
+      line-height: 1.08;
+    }
+
+    .slide[data-title="Amazon Quick"] .keyword-title {
+      font-size: 82px;
+    }
+
+    .slide[data-title="Amazon Quick"] .lead,
+    .slide[data-title="Agentic AI"] .lead,
+    .slide[data-title="Physical AI"] .lead {
+      font-size: 20px;
+      line-height: 1.42;
     }
 
     .placeholder {
@@ -1161,8 +1193,8 @@
 
     <section class="slide" data-title="3M Quick">
       <div class="meta"><strong>3M CASE</strong><span>08 / 14</span></div>
-      <div class="canvas wide two-col">
-        <div class="stack">
+      <div class="canvas wide stack">
+        <div class="stack" style="gap: 12px;">
           <div class="eyebrow">실제 고객 사례 · 3M</div>
           <h2 class="title">
             <span class="break">3M은 영업 데이터가</span>
@@ -1174,26 +1206,21 @@
             공식 고객 사례에 따르면 3M은 영업 효과, 위험, 가격 관련 정보를 빠르게 합성하고,
             <span class="break">Quick Flows로 보고서 요약과 레코드 업데이트 같은 행정 업무를 자동화한다.</span>
           </p>
-          <p class="source">Source: Amazon Quick Suite customer story for 3M.</p>
         </div>
-        <div class="timeline">
-          <div class="step"><div class="label">문제</div><p>영업팀이 여러 플랫폼과 시스템의 데이터를 따로 확인해야 했다.</p></div>
-          <div class="step"><div class="label">Quick</div><p>중요 정보를 빠르게 합성해 영업 효과, 위험, 가격 맥락을 정리한다.</p></div>
-          <div class="step"><div class="label">Flows</div><p>보고서 요약, 기록 업데이트 같은 반복 업무를 자동화한다.</p></div>
-          <div class="step"><div class="label">효과</div><p>팀이 행정 업무보다 파이프라인 진행과 기회 관리에 더 집중할 수 있다.</p></div>
+        <div class="card-grid four">
+          <article class="card highlight"><h3>문제</h3><p>영업팀이 여러 플랫폼과 시스템의 데이터를 따로 확인해야 했다.</p></article>
+          <article class="card"><h3>Quick</h3><p>중요 정보를 빠르게 합성해 영업 효과, 위험, 가격 맥락을 정리한다.</p></article>
+          <article class="card"><h3>Flows</h3><p>보고서 요약, 기록 업데이트 같은 반복 업무를 자동화한다.</p></article>
+          <article class="card"><h3>효과</h3><p>행정 업무보다 파이프라인 진행과 기회 관리에 더 집중할 수 있다.</p></article>
         </div>
+        <p class="source">Source: Amazon Quick Suite customer story for 3M.</p>
       </div>
     </section>
 
     <section class="slide" data-title="Agentic AI">
       <div class="meta"><strong>KEYNOTE 04</strong><span>09 / 14</span></div>
-      <div class="canvas wide two-col reverse">
-        <div class="metric-grid">
-          <div class="metric"><b>90%+</b><span>삼성 Account Platform은 AWS 기반 자율 운영 에이전트로 장애 복구 시간을 90% 이상 단축한 사례로 소개됐다.</span></div>
-          <div class="metric"><b>10분</b><span>장애를 빠르게 감지하고 복구하는 운영 에이전트 목표가 언급됐다.</span></div>
-          <div class="metric"><b>21억</b><span>삼성 Account Platform은 전 세계 21억 명 이상이 사용하는 플랫폼으로 보도됐다.</span></div>
-        </div>
-        <div class="stack">
+      <div class="canvas wide stack">
+        <div class="stack" style="gap: 12px;">
           <div class="eyebrow">Agentic AI</div>
           <h2 class="title">
             <span class="break">AI가 대답만 하는 도구에서,</span>
@@ -1204,15 +1231,20 @@
             <span class="break">에이전트를 바로 쓰기 어려운 이유로</span>
             <span class="break">재현 가능성, 설명 가능성, 오류 수정 가능한 프로세스를 강조했다.</span>
           </p>
-          <p class="source">Source: ChosunBiz, News1/FNNews.</p>
         </div>
+        <div class="metric-grid">
+          <div class="metric"><b>90%+</b><span>삼성 Account Platform은 AWS 기반 자율 운영 에이전트로 장애 복구 시간을 90% 이상 단축한 사례로 소개됐다.</span></div>
+          <div class="metric"><b>10분</b><span>장애를 빠르게 감지하고 복구하는 운영 에이전트 목표가 언급됐다.</span></div>
+          <div class="metric"><b>21억</b><span>삼성 Account Platform은 전 세계 21억 명 이상이 사용하는 플랫폼으로 보도됐다.</span></div>
+        </div>
+        <p class="source">Source: ChosunBiz, News1/FNNews.</p>
       </div>
     </section>
 
     <section class="slide" data-title="Physical AI">
       <div class="meta"><strong>KEYNOTE 05</strong><span>10 / 14</span></div>
-      <div class="canvas wide two-col">
-        <div class="stack">
+      <div class="canvas wide stack">
+        <div class="stack" style="gap: 12px;">
           <div class="eyebrow">Physical AI</div>
           <h2 class="title">
             <span class="break">AI가 화면 안에서 끝나지 않고,</span>
@@ -1224,22 +1256,18 @@
             <span class="break">피지컬 AI에서 잠재력이 크다고 강조했다.</span>
           </p>
         </div>
-        <div class="timeline">
-          <div class="step"><div class="label">데이터</div><p>현장의 이미지, 센서, 운영 데이터를 모은다.</p></div>
-          <div class="step"><div class="label">학습</div><p>AWS 인프라 위에서 모델을 학습하고 실험한다.</p></div>
-          <div class="step"><div class="label">시뮬레이션</div><p>물리 세계에 적용하기 전 가상 환경에서 검증한다.</p></div>
-          <div class="step"><div class="label">엣지</div><p>현장 장비 가까이에서 빠르게 추론한다.</p></div>
+        <div class="card-grid four">
+          <article class="card highlight"><h3>데이터</h3><p>현장의 이미지, 센서, 운영 데이터를 모은다.</p></article>
+          <article class="card"><h3>학습</h3><p>AWS 인프라 위에서 모델을 학습하고 실험한다.</p></article>
+          <article class="card"><h3>시뮬레이션</h3><p>물리 세계에 적용하기 전 가상 환경에서 검증한다.</p></article>
+          <article class="card"><h3>엣지</h3><p>현장 장비 가까이에서 빠르게 추론한다.</p></article>
         </div>
       </div>
     </section>
 
     <section class="slide" data-title="Expo">
       <div class="meta"><strong>EXPO HALL</strong><span>11 / 14</span></div>
-      <div class="canvas wide two-col reverse">
-        <div class="photo-card">
-          <img src="assets/images/summit-expo-map.jpg" alt="AWS Summit Seoul Expo Hall map">
-          <div class="photo-caption">Expo - Hall C map</div>
-        </div>
+      <div class="canvas wide stack">
         <div class="stack">
           <div class="eyebrow">Expo에서 보인 흐름</div>
           <h2 class="title small">
@@ -1247,12 +1275,20 @@
             <span class="break">라이브 커머스, 매장 분석, 제조, 보안 같은</span>
             <span class="break">실제 업무로 들어가고 있었다.</span>
           </h2>
+        </div>
+        <div class="two-col reverse">
+          <div class="photo-card">
+            <img src="assets/images/summit-expo-map.jpg" alt="AWS Summit Seoul Expo Hall map">
+            <div class="photo-caption">Expo - Hall C map</div>
+          </div>
+          <div class="stack">
           <ul class="list">
             <li>Typecast는 AI 음성/영상 제작 데모로 실시간 반응형 가상 진행자를 보여줬다.</li>
             <li>mAy-I는 CCTV 기반 방문객 흐름 분석을 시각화했고, ECS, S3, Bedrock 활용 사례로 보도됐다.</li>
             <li>스타트업 존에는 AI 추론 클라우드, HR AI, 제조 AI, 보안, 리테일 분석 분야가 소개됐다.</li>
           </ul>
           <p class="source">Source: Donga.com AWS Summit Seoul 2026 startup zone report.</p>
+          </div>
         </div>
       </div>
     </section>
