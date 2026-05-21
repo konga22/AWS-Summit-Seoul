@@ -14,9 +14,16 @@ AWS Summit Seoul 2026을 다녀온 후기를 HTML 발표 자료처럼 만든 정
         ├── summit-entrance.jpg
         ├── summit-expo-map.jpg
         ├── summit-keynote-side.jpg
+        ├── summit-official-workshop.jpg
         ├── summit-stage-icons.jpg
         ├── summit-stage-portrait.jpg
-        └── summit-wide-stage.jpg
+        ├── summit-wide-stage.jpg
+        ├── kiro-ghost.png
+        ├── kiro-vibe-specs.png
+        ├── kiro-spec-tasks.png
+        ├── kiro-agent-hooks.png
+        ├── quick-chat-agent.png
+        └── physical-ai-robot.gif
 ```
 
 ## 로컬 실행
@@ -123,10 +130,12 @@ https://www.aws-summit-review.com
 
 - AWS Summit Seoul 2026 공식 페이지
 - AWS Kiro 공식 문서 및 FAQ
-- Kiro 공식 웹사이트 이미지: Specs/Tasks, Agent Hooks 화면
+- Kiro 공식 웹사이트 이미지: ghost 캐릭터, vibe coding/specs 다이어그램, Specs/Tasks, Agent Hooks 화면
 - Amazon Quick / Amazon Quick Suite 공식 페이지
+- AWS News Blog: Amazon Quick Suite 제품 화면
 - Amazon Quick 고객 사례 페이지: 3M
 - Amazon Q Developer 고객 사례 페이지
+- AWS Physical AI Blog: 로봇 학습 예시 이미지
 - 조선비즈: AWS Summit Seoul 2026 키노트 보도
 - 파이낸셜뉴스/뉴스1: AI-DLC, Agentic AI, Physical AI 관련 보도
 - 동아일보: AWS Summit Seoul 2026 스타트업 존/Expo 보도

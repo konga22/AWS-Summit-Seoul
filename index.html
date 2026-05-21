@@ -479,6 +479,99 @@
       gap: 12px;
     }
 
+    .info-visual {
+      display: grid;
+      gap: 14px;
+    }
+
+    .info-photo,
+    .quick-screenshot,
+    .kiro-mascot-card,
+    .kiro-venn {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.065);
+    }
+
+    .info-photo {
+      height: 200px;
+      margin: 0;
+    }
+
+    .info-photo img,
+    .quick-screenshot img,
+    .kiro-venn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.12) contrast(1.04);
+    }
+
+    .info-photo::after,
+    .quick-screenshot::after,
+    .kiro-venn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(5, 2, 13, 0.72), transparent 56%);
+      pointer-events: none;
+    }
+
+    .info-photo figcaption,
+    .quick-screenshot span,
+    .kiro-venn span {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 14px;
+      z-index: 2;
+      color: var(--white);
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 850;
+    }
+
+    .dlc-flow {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .dlc-node {
+      min-height: 122px;
+      padding: 16px;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .dlc-node b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--magenta);
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .dlc-node strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--white);
+      font-size: 18px;
+      line-height: 1.15;
+      font-weight: 900;
+    }
+
+    .dlc-node span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+      font-weight: 650;
+    }
+
     .step {
       display: grid;
       grid-template-columns: 160px 1fr;
@@ -561,6 +654,225 @@
 
     .slide[data-title="AWS Kiro"] .diff-row {
       padding: 12px 14px;
+    }
+
+    .kiro-mascot-card {
+      min-height: 260px;
+      padding: 22px;
+      background:
+        radial-gradient(circle at 78% 34%, rgba(255, 255, 255, 0.24), transparent 26%),
+        linear-gradient(135deg, rgba(255, 43, 214, 0.28), rgba(91, 22, 255, 0.18) 52%, rgba(255, 255, 255, 0.06));
+    }
+
+    .kiro-mascot-card::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      pointer-events: none;
+    }
+
+    .kiro-ghost {
+      position: absolute;
+      right: 40px;
+      top: 34px;
+      width: 118px;
+      height: auto;
+      filter: drop-shadow(0 0 26px rgba(255, 255, 255, 0.35));
+      animation: floatGhost 3.6s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    @keyframes floatGhost {
+      0%,
+      100% {
+        transform: translateY(0) rotate(-3deg);
+      }
+      50% {
+        transform: translateY(-10px) rotate(2deg);
+      }
+    }
+
+    .kiro-mascot-copy {
+      position: relative;
+      z-index: 3;
+      max-width: 360px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .kiro-mascot-copy h3 {
+      margin: 0;
+      color: var(--white);
+      font-size: 40px;
+      line-height: 1.02;
+      font-weight: 950;
+    }
+
+    .kiro-mascot-copy p {
+      margin: 0;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .kiro-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .kiro-tags span {
+      padding: 7px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(5, 2, 13, 0.5);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .kiro-venn {
+      height: 178px;
+    }
+
+    .kiro-venn img {
+      object-fit: contain;
+      padding: 10px 18px 34px;
+      background: #000;
+    }
+
+    .kiro-mini-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .kiro-shot.compact {
+      height: 144px;
+    }
+
+    .quick-explain-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .quick-screenshot {
+      min-height: 260px;
+    }
+
+    .quick-screenshot img {
+      object-fit: cover;
+      object-position: left top;
+      filter: saturate(1.04) contrast(1.02);
+    }
+
+    .quick-compare {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .quick-compare .compare {
+      min-height: 124px;
+      padding: 18px;
+      gap: 10px;
+    }
+
+    .quick-compare .compare h3 {
+      font-size: 27px;
+    }
+
+    .quick-compare .compare p {
+      font-size: 14px;
+    }
+
+    .physical-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .physical-photo {
+      position: relative;
+      height: 286px;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .physical-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.12) contrast(1.08);
+    }
+
+    .physical-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(5, 2, 13, 0.78), transparent 58%);
+    }
+
+    .physical-photo figcaption {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 14px;
+      z-index: 2;
+      color: var(--white);
+      font-size: 13px;
+      line-height: 1.34;
+      font-weight: 850;
+    }
+
+    .physical-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .physical-point {
+      min-height: 137px;
+      padding: 18px;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .physical-point.highlight {
+      border-color: rgba(255, 43, 214, 0.48);
+      background: linear-gradient(160deg, rgba(255, 43, 214, 0.2), rgba(255, 255, 255, 0.055));
+    }
+
+    .physical-point h3 {
+      margin: 0 0 10px;
+      color: var(--white);
+      font-size: 22px;
+      line-height: 1.12;
+      font-weight: 900;
+    }
+
+    .physical-point p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+      font-weight: 650;
+    }
+
+    .slide[data-title="AI-DLC overview"] .two-col {
+      grid-template-columns: 0.95fr 1.05fr;
+      align-items: center;
+    }
+
+    .slide[data-title="AI-DLC overview"] .lead {
+      font-size: 20px;
     }
 
     .slide[data-title="AI-DLC difference"] .title.small {
@@ -926,6 +1238,101 @@
         height: 202px;
       }
 
+      .info-photo {
+        height: 170px;
+      }
+
+      .dlc-node {
+        min-height: 106px;
+        padding: 13px;
+      }
+
+      .dlc-node b {
+        font-size: 22px;
+        margin-bottom: 6px;
+      }
+
+      .dlc-node strong {
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+
+      .dlc-node span {
+        font-size: 12px;
+      }
+
+      .kiro-mascot-card {
+        min-height: 218px;
+        padding: 18px;
+      }
+
+      .kiro-ghost {
+        width: 92px;
+        right: 32px;
+        top: 28px;
+      }
+
+      .kiro-mascot-copy h3 {
+        font-size: 34px;
+      }
+
+      .kiro-mascot-copy p {
+        font-size: 14px;
+      }
+
+      .kiro-venn {
+        height: 150px;
+      }
+
+      .kiro-shot.compact {
+        height: 118px;
+      }
+
+      .quick-screenshot {
+        min-height: 228px;
+      }
+
+      .slide[data-title="Amazon Quick"] .keyword-title {
+        font-size: 74px;
+      }
+
+      .slide[data-title="Amazon Quick"] .lead {
+        font-size: 18px;
+        line-height: 1.34;
+      }
+
+      .quick-compare .compare {
+        min-height: 112px;
+        padding: 15px;
+      }
+
+      .quick-compare .compare h3 {
+        font-size: 23px;
+      }
+
+      .quick-compare .compare p {
+        font-size: 13px;
+        line-height: 1.38;
+      }
+
+      .physical-photo {
+        height: 244px;
+      }
+
+      .physical-point {
+        min-height: 116px;
+        padding: 14px;
+      }
+
+      .physical-point h3 {
+        font-size: 18px;
+        margin-bottom: 7px;
+      }
+
+      .physical-point p {
+        font-size: 12px;
+      }
+
       .kiro-diff {
         gap: 10px;
       }
@@ -966,8 +1373,19 @@
       .photo-strip,
       .compare-grid,
       .metric-grid,
-      .kiro-visual-grid {
+      .kiro-visual-grid,
+      .kiro-mini-row,
+      .quick-explain-grid,
+      .dlc-flow,
+      .physical-layout,
+      .physical-points {
         grid-template-columns: 1fr;
+      }
+
+      .title .break,
+      .lead .break,
+      .keyword-title .break {
+        white-space: normal;
       }
 
       .display {
@@ -1080,16 +1498,23 @@
           <p class="lead">
             이 페이지는 핵심 키워드 나열이 아니라,
             <span class="break">AI-DLC 하나를 이해하기 위한 설명이다.</span>
-            <span class="break">AI-DLC는 “AI가 코드 몇 줄을 추천한다”가 아니라,</span>
+            <span class="break">AI-DLC는 “코드 몇 줄 추천”이 아니라,</span>
             <span class="break">기획에서 개발, 테스트, 운영까지</span>
             <span class="break">소프트웨어 개발 주기를 다시 짜는 방식이다.</span>
           </p>
+          <p class="source">Source: AWS Summit Seoul 2026 AI-DLC Challenge, ChosunBiz/FNNews.</p>
         </div>
-        <div class="timeline">
-          <div class="step"><div class="label">요구사항</div><p>사람이 목표를 말하면 AI가 빠진 조건, 모순, 위험을 찾아낸다.</p></div>
-          <div class="step"><div class="label">설계</div><p>AI가 아키텍처와 데이터 흐름을 제안하고, 사람은 책임 있는 결정을 내린다.</p></div>
-          <div class="step"><div class="label">구현</div><p>AI가 반복 코딩과 테스트 초안을 만들고, 사람은 품질과 방향을 검증한다.</p></div>
-          <div class="step"><div class="label">운영</div><p>배포 후 장애, 보안, 비용을 에이전트가 함께 점검한다.</p></div>
+        <div class="info-visual">
+          <figure class="info-photo">
+            <img src="assets/images/summit-official-workshop.jpg" alt="AWS Summit Seoul workshop area">
+            <figcaption>AWS Summit Seoul 공식 워크숍 이미지: AI-DLC는 실습형 개발 방법론으로 소개됐다.</figcaption>
+          </figure>
+          <div class="dlc-flow">
+            <div class="dlc-node"><b>01</b><strong>요구사항</strong><span>목표를 말하면 AI가 조건, 모순, 위험을 정리한다.</span></div>
+            <div class="dlc-node"><b>02</b><strong>설계</strong><span>아키텍처와 데이터 흐름을 제안하고 사람이 결정한다.</span></div>
+            <div class="dlc-node"><b>03</b><strong>구현</strong><span>반복 코딩과 테스트 초안을 만들고 품질을 검증한다.</span></div>
+            <div class="dlc-node"><b>04</b><strong>운영</strong><span>배포 뒤 장애, 보안, 비용 점검까지 이어진다.</span></div>
+          </div>
         </div>
       </div>
     </section>
@@ -1148,21 +1573,42 @@
           <p class="source">Source: AWS Kiro documentation, Kiro FAQ, AWS Builder Center.</p>
         </div>
         <div class="kiro-visual-grid">
-          <figure class="kiro-shot">
-            <img src="assets/images/kiro-spec-tasks.png" alt="Kiro spec task list screenshot">
-            <span>Kiro Specs: requirements, design, task list</span>
+          <div class="kiro-mascot-card" aria-label="Kiro mascot character card">
+            <img class="kiro-ghost" src="assets/images/kiro-ghost.png" alt="Kiro ghost mascot">
+            <div class="kiro-mascot-copy">
+              <h3>귀엽지만,<span class="break magenta">일은 체계적으로.</span></h3>
+              <p>
+                Kiro의 차별점은 “대충 만들어줘”에서 끝나지 않고,
+                <span class="break">요구사항과 설계를 남긴 뒤 구현으로 간다는 점이다.</span>
+              </p>
+              <div class="kiro-tags">
+                <span>Specs</span>
+                <span>Hooks</span>
+                <span>Steering</span>
+              </div>
+            </div>
+          </div>
+          <figure class="kiro-venn">
+            <img src="assets/images/kiro-vibe-specs.png" alt="Kiro diagram connecting vibe coding and specs">
+            <span>Vibe coding의 속도 + Specs의 명확함</span>
           </figure>
-          <figure class="kiro-shot">
-            <img src="assets/images/kiro-agent-hooks.png" alt="Kiro agent hooks screenshot">
-            <span>Kiro Agent Hooks: 반복 작업 자동화</span>
-          </figure>
+          <div class="kiro-mini-row">
+            <figure class="kiro-shot compact">
+              <img src="assets/images/kiro-spec-tasks.png" alt="Kiro spec task list screenshot">
+              <span>Specs: 요구사항·설계·작업</span>
+            </figure>
+            <figure class="kiro-shot compact">
+              <img src="assets/images/kiro-agent-hooks.png" alt="Kiro agent hooks screenshot">
+              <span>Hooks: 반복 작업 자동화</span>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="slide" data-title="Amazon Quick">
       <div class="meta"><strong>KEYNOTE 03</strong><span>07 / 14</span></div>
-      <div class="canvas wide two-col">
+      <div class="canvas wide stack">
         <div class="stack">
           <div class="eyebrow">Amazon Quick</div>
           <h2 class="keyword-title">
@@ -1176,17 +1622,23 @@
             <span class="break">문서 작성, 요약, 후속 조치까지 실행하는 AI다.</span>
           </p>
         </div>
-        <div class="compare-grid">
-          <article class="compare">
-            <div class="label">Before</div>
-            <h3>앱 사이를 계속 이동</h3>
-            <p>메일을 보고, 파일을 찾고, Slack을 뒤지고, 다시 문서로 옮기는 시간이 쌓인다.</p>
-          </article>
-          <article class="compare after">
-            <div class="label">After</div>
-            <h3>일의 맥락을 한 곳에서 연결</h3>
-            <p>Quick이 데이터를 찾아 합성하고, 보고서 요약이나 레코드 업데이트 같은 반복 업무를 자동화한다.</p>
-          </article>
+        <div class="quick-explain-grid">
+          <figure class="quick-screenshot">
+            <img src="assets/images/quick-chat-agent.png" alt="Amazon Quick Suite chat agent interface">
+            <span>공식 AWS News Blog 화면: Quick Suite는 질문, 분석, 자동화를 한 작업 공간으로 묶는다.</span>
+          </figure>
+          <div class="compare-grid quick-compare">
+            <article class="compare">
+              <div class="label">Before</div>
+              <h3>앱 사이를 계속 이동</h3>
+              <p>메일을 보고, 파일을 찾고, Slack을 뒤지고, 다시 문서로 옮기는 시간이 쌓인다.</p>
+            </article>
+            <article class="compare after">
+              <div class="label">After</div>
+              <h3>일의 맥락을 한 곳에서 연결</h3>
+              <p>Quick이 데이터를 찾아 합성하고, 요약이나 레코드 업데이트 같은 반복 업무를 자동화한다.</p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -1256,12 +1708,19 @@
             <span class="break">피지컬 AI에서 잠재력이 크다고 강조했다.</span>
           </p>
         </div>
-        <div class="card-grid four">
-          <article class="card highlight"><h3>데이터</h3><p>현장의 이미지, 센서, 운영 데이터를 모은다.</p></article>
-          <article class="card"><h3>학습</h3><p>AWS 인프라 위에서 모델을 학습하고 실험한다.</p></article>
-          <article class="card"><h3>시뮬레이션</h3><p>물리 세계에 적용하기 전 가상 환경에서 검증한다.</p></article>
-          <article class="card"><h3>엣지</h3><p>현장 장비 가까이에서 빠르게 추론한다.</p></article>
+        <div class="physical-layout">
+          <figure class="physical-photo">
+            <img src="assets/images/physical-ai-robot.gif" alt="AWS Physical AI robot learning example">
+            <figcaption>AWS Physical AI Blog 예시: 로봇 학습은 현실 데이터와 시뮬레이션을 함께 쓴다.</figcaption>
+          </figure>
+          <div class="physical-points">
+            <article class="physical-point highlight"><h3>현실 데이터</h3><p>카메라, 센서, 운영 데이터를 모아 물리 세계를 읽는다.</p></article>
+            <article class="physical-point"><h3>학습</h3><p>SageMaker, GPU 인프라 위에서 모델을 훈련한다.</p></article>
+            <article class="physical-point"><h3>시뮬레이션</h3><p>현장 투입 전 가상 환경에서 행동을 반복 검증한다.</p></article>
+            <article class="physical-point"><h3>엣지 추론</h3><p>로봇과 장비 가까이에서 빠르게 판단하고 움직인다.</p></article>
+          </div>
         </div>
+        <p class="source">Source: AWS Physical AI Blog, ChosunBiz.</p>
       </div>
     </section>
 
