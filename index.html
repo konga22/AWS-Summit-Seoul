@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS Summit Seoul 2026 후기</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <style>
+    :root {
+      --black: #05020d;
+      --night: #0b061f;
+      --panel: rgba(255, 255, 255, 0.075);
+      --panel-strong: rgba(255, 255, 255, 0.12);
+      --line: rgba(255, 255, 255, 0.2);
+      --line-soft: rgba(255, 255, 255, 0.12);
+      --white: #ffffff;
+      --text: rgba(255, 255, 255, 0.9);
+      --muted: rgba(255, 255, 255, 0.66);
+      --dim: rgba(255, 255, 255, 0.46);
+      --magenta: #ff2bd6;
+      --cyan: #49f2ff;
+      --violet: #5b16ff;
+      --deep: #24008a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--black);
+      color: var(--white);
+      font-family: "Pretendard", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    .deck {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(91, 22, 255, 0.35), transparent 34%),
+        radial-gradient(circle at 82% 86%, rgba(255, 43, 214, 0.2), transparent 32%),
+        var(--black);
+      isolation: isolate;
+    }
+
+    .deck::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: calc(100vw / 8) calc(100vh / 6);
+      z-index: 1;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: 62px 68px 52px;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(36, 0, 138, 0.36), transparent 36%),
+        linear-gradient(18deg, rgba(255, 43, 214, 0.12), transparent 34%),
+        var(--black);
+    }
+
+    .slide.active {
+      display: flex;
+      animation: slideIn 300ms ease both;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .meta {
+      position: absolute;
+      top: 28px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--dim);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      z-index: 20;
+    }
+
+    .meta strong {
+      color: var(--white);
+    }
+
+    .canvas {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      max-width: 1180px;
+      margin: auto;
+    }
+
+    .canvas.wide {
+      max-width: 1240px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 34px;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .two-col.reverse {
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .center {
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-size: 15px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .display {
+      margin: 0;
+      color: var(--white);
+      font-size: 96px;
+      line-height: 0.98;
+      font-weight: 950;
+    }
+
+    .title {
+      margin: 0;
+      color: var(--white);
+      font-size: 60px;
+      line-height: 1.08;
+      font-weight: 950;
+    }
+
+    .title.small {
+      font-size: 43px;
+      line-height: 1.14;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .body {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.58;
+      font-weight: 600;
+    }
+
+    .note {
+      margin: 0;
+      color: var(--dim);
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .magenta {
+      color: var(--magenta);
+    }
+
+    .cyan {
+      color: var(--cyan);
+    }
+
+    .break {
+      display: block;
+    }
+
+    .photo-bg,
+    .photo-card img,
+    .photo-strip img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.22) contrast(1.08);
+    }
+
+    .photo-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.52;
+    }
+
+    .shade {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(90deg, rgba(5, 2, 13, 0.94), rgba(5, 2, 13, 0.58) 52%, rgba(5, 2, 13, 0.88)),
+        linear-gradient(0deg, rgba(5, 2, 13, 0.88), transparent 50%, rgba(36, 0, 138, 0.32));
+    }
+
+    .pixel-grid {
+      position: absolute;
+      right: 68px;
+      top: 78px;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: repeat(7, 14px);
+      grid-auto-rows: 14px;
+      gap: 8px;
+      opacity: 0.78;
+    }
+
+    .pixel-grid i {
+      display: block;
+      background: var(--magenta);
+      box-shadow: 0 0 18px rgba(255, 43, 214, 0.54);
+    }
+
+    .pixel-grid i:nth-child(4n) {
+      background: var(--cyan);
+      box-shadow: 0 0 18px rgba(73, 242, 255, 0.4);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card-grid.four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      min-height: 150px;
+      padding: 22px;
+      border: 1px solid var(--line-soft);
+      background: linear-gradient(160deg, var(--panel-strong), rgba(255, 255, 255, 0.04));
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .card.highlight {
+      border-color: rgba(255, 43, 214, 0.44);
+      background:
+        linear-gradient(160deg, rgba(255, 43, 214, 0.18), rgba(255, 255, 255, 0.05)),
+        var(--panel);
+    }
+
+    .card .num {
+      color: var(--magenta);
+      font-size: 48px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .card h3 {
+      margin: 0;
+      color: var(--white);
+      font-size: 23px;
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.48;
+      font-weight: 650;
+    }
+
+    .stat {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 18px;
+      align-items: center;
+      padding: 16px 18px;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.065);
+    }
+
+    .stat b {
+      color: var(--magenta);
+      font-size: 48px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .stat span {
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.42;
+      font-weight: 700;
+    }
+
+    .photo-card {
+      position: relative;
+      height: 410px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .photo-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(0deg, rgba(5, 2, 13, 0.75), transparent 48%),
+        linear-gradient(90deg, rgba(36, 0, 138, 0.28), transparent 55%);
+      pointer-events: none;
+    }
+
+    .photo-caption {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      z-index: 3;
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .photo-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .photo-strip figure {
+      position: relative;
+      height: 220px;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .photo-strip figcaption {
+      position: absolute;
+      left: 14px;
+      bottom: 12px;
+      z-index: 3;
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .photo-strip figure::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(5, 2, 13, 0.76), transparent 52%);
+    }
+
+    .quote-block {
+      padding: 28px;
+      border-left: 5px solid var(--magenta);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .quote-block p {
+      margin: 0;
+      color: var(--white);
+      font-size: 30px;
+      line-height: 1.38;
+      font-weight: 850;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list li {
+      position: relative;
+      padding: 14px 16px 14px 38px;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .list li::before {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 22px;
+      width: 8px;
+      height: 8px;
+      background: var(--magenta);
+      box-shadow: 0 0 12px rgba(255, 43, 214, 0.62);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 18px;
+      align-items: stretch;
+      min-height: 86px;
+    }
+
+    .step .label {
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 43, 214, 0.35);
+      background: rgba(255, 43, 214, 0.12);
+      color: var(--white);
+      font-size: 18px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .step p {
+      margin: 0;
+      padding: 18px;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.44;
+      font-weight: 700;
+    }
+
+    .slide[data-title="Cover"] .display,
+    .slide[data-title="Closing"] .display {
+      font-size: 108px;
+    }
+
+    .slide[data-title="Event facts"] .title.small,
+    .slide[data-title="Expo"] .title.small {
+      font-size: 38px;
+      line-height: 1.18;
+    }
+
+    .slide[data-title="AI-DLC"] .card h3,
+    .slide[data-title="Agentic AI"] .card h3 {
+      font-size: 21px;
+    }
+
+    .slide[data-title="AI-DLC"] .card.highlight h3,
+    .slide[data-title="Agentic AI"] .card.highlight h3 {
+      font-size: 27px;
+    }
+
+    .slide[data-title="AI-DLC"] .card.highlight p,
+    .slide[data-title="Agentic AI"] .card.highlight p {
+      font-size: 16px;
+    }
+
+    .slide[data-title="Use AWS"] .step .label {
+      font-size: 20px;
+    }
+
+    .slide[data-title="AI-DLC difference"] .title.small {
+      font-size: 34px;
+      line-height: 1.16;
+    }
+
+    .slide[data-title="AI-DLC difference"] .compare {
+      min-height: 218px;
+      padding: 20px;
+    }
+
+    .slide[data-title="AI-DLC difference"] .metric {
+      min-height: 134px;
+      padding: 16px;
+    }
+
+    .placeholder {
+      min-height: 245px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 26px;
+      border: 2px dashed rgba(255, 255, 255, 0.34);
+      background:
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04) 0 12px, rgba(255, 255, 255, 0.015) 12px 24px),
+        rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .placeholder b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--white);
+      font-size: 30px;
+      font-weight: 950;
+    }
+
+    .source {
+      margin-top: 14px;
+      color: var(--dim);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 650;
+    }
+
+    .keyword-title {
+      margin: 0;
+      color: var(--white);
+      font-size: 92px;
+      line-height: 0.94;
+      font-weight: 950;
+    }
+
+    .keyword-title .subword {
+      display: block;
+      color: var(--magenta);
+      font-size: 0.62em;
+      line-height: 1.02;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .compare {
+      min-height: 260px;
+      padding: 24px;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      justify-content: space-between;
+    }
+
+    .compare.after {
+      border-color: rgba(255, 43, 214, 0.48);
+      background: linear-gradient(160deg, rgba(255, 43, 214, 0.2), rgba(255, 255, 255, 0.055));
+    }
+
+    .compare .label {
+      color: var(--cyan);
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .compare h3 {
+      margin: 0;
+      color: var(--white);
+      font-size: 36px;
+      line-height: 1.05;
+      font-weight: 950;
+    }
+
+    .compare p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 650;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metric {
+      min-height: 160px;
+      padding: 20px;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .metric b {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--magenta);
+      font-size: 44px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .metric span {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .nav {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      z-index: 60;
+      transition: opacity 160ms ease;
+    }
+
+    .nav:hover,
+    .nav:focus-within {
+      opacity: 1;
+    }
+
+    .nav button,
+    .counter {
+      height: 38px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(5, 2, 13, 0.82);
+    }
+
+    .nav button {
+      width: 38px;
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .counter {
+      min-width: 78px;
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 61;
+    }
+
+    .bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--magenta), var(--cyan));
+      transition: width 180ms ease;
+    }
+
+    @media (max-height: 760px) {
+      .slide {
+        padding-top: 56px;
+        padding-bottom: 44px;
+      }
+
+      .display {
+        font-size: 84px;
+      }
+
+      .title {
+        font-size: 50px;
+      }
+
+      .title.small {
+        font-size: 36px;
+      }
+
+      .lead {
+        font-size: 19px;
+      }
+
+      .photo-card {
+        height: 360px;
+      }
+
+      .card {
+        min-height: 132px;
+        padding: 18px;
+      }
+
+      .card h3 {
+        font-size: 20px;
+      }
+
+      .card p,
+      .list li,
+      .step p {
+        font-size: 14px;
+      }
+
+      .slide[data-title="Cover"] .display,
+      .slide[data-title="Closing"] .display {
+        font-size: 92px;
+      }
+
+      .slide[data-title="AI-DLC"] .card.highlight h3,
+      .slide[data-title="Agentic AI"] .card.highlight h3 {
+        font-size: 24px;
+      }
+
+      .photo-strip figure {
+        height: 190px;
+      }
+
+      .keyword-title {
+        font-size: 78px;
+      }
+
+      .compare {
+        min-height: 220px;
+      }
+
+      .compare h3 {
+        font-size: 31px;
+      }
+
+      .metric b {
+        font-size: 36px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      html,
+      body {
+        overflow: auto;
+      }
+
+      .deck {
+        position: static;
+      }
+
+      .slide,
+      .slide.active {
+        position: relative;
+        display: flex;
+        min-height: 100vh;
+        padding: 78px 24px 56px;
+      }
+
+      .meta {
+        left: 24px;
+        right: 24px;
+      }
+
+      .two-col,
+      .two-col.reverse,
+      .card-grid,
+      .card-grid.two,
+      .card-grid.four,
+      .photo-strip,
+      .compare-grid,
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .display {
+        font-size: 54px;
+      }
+
+      .title,
+      .title.small {
+        font-size: 36px;
+      }
+
+      .lead {
+        font-size: 19px;
+      }
+
+      .photo-card {
+        height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide active center" data-title="Cover">
+      <img class="photo-bg" src="assets/images/summit-stage-icons.jpg" alt="AWS Summit Seoul keynote stage with purple lights">
+      <div class="shade"></div>
+      <div class="pixel-grid" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <div class="meta"><strong>AWS SUMMIT SEOUL</strong><span>01 / 14</span></div>
+      <div class="canvas stack center">
+        <div class="eyebrow">Field Review · 2026.05.20-21 · COEX</div>
+        <h1 class="display">
+          <span class="break">AWS Summit Seoul 2026</span>
+          <span class="break magenta">다녀온 후기</span>
+        </h1>
+        <p class="lead" style="max-width: 760px;">현장 사진의 분위기를 살리면서, 키노트에서 나온 AI-DLC, Amazon Quick, AWS Kiro를 처음 보는 사람도 이해할 수 있게 정리한다.</p>
+        <div class="chips">
+          <span class="chip">AI-DLC</span>
+          <span class="chip">Amazon Quick</span>
+          <span class="chip">AWS Kiro</span>
+          <span class="chip">Physical AI</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Event facts">
+      <div class="meta"><strong>EVENT FACTS</strong><span>02 / 14</span></div>
+      <div class="canvas wide two-col reverse">
+        <div class="photo-card">
+          <img src="assets/images/summit-entrance.jpg" alt="Welcome to AWS Summit Seoul entrance">
+          <div class="photo-caption">Welcome to AWS Summit Seoul</div>
+        </div>
+        <div class="stack">
+          <div class="eyebrow">AWS Summit Seoul이란?</div>
+          <h2 class="title small">
+            <span class="break">AI와 클라우드가 산업 현장에서</span>
+            <span class="break">어떻게 쓰이는지 보여주는 AWS의 대형 컨퍼런스.</span>
+          </h2>
+          <div class="stack" style="gap: 12px;">
+            <div class="stat"><b>2일</b><span>2026년 5월 20일-21일, 코엑스에서 진행.</span></div>
+            <div class="stat"><b>18</b><span>Industry Day 9개 트랙, AI Day 9개 트랙.</span></div>
+            <div class="stat"><b>120+</b><span>세션, Expo, Workshop, Lightning Talk, 고객 사례 중심.</span></div>
+          </div>
+          <p class="source">Source: AWS Summit Seoul 2026 official event page, News1/FNNews.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Keynote map">
+      <img class="photo-bg" src="assets/images/summit-keynote-side.jpg" alt="AWS Summit Seoul keynote stage">
+      <div class="shade"></div>
+      <div class="meta"><strong>KEYNOTE MAP</strong><span>03 / 14</span></div>
+      <div class="canvas wide two-col">
+        <div class="stack">
+          <div class="eyebrow">연설 핵심 지도</div>
+          <h2 class="title">
+            <span class="break">생성형 AI는</span>
+            <span class="break">이제 “답변”에서 끝나지 않고,</span>
+            <span class="break magenta">일하는 방식 전체로 확장된다.</span>
+          </h2>
+          <p class="lead">
+            함기호 AWS Korea 대표는 생성형 AI가 Agentic AI, AI-DLC, Physical AI로 확장된다고 설명했다.
+          </p>
+        </div>
+        <div class="card-grid">
+          <article class="card highlight"><span class="num">01</span><h3>AI-DLC</h3><p>개발 생명주기 전체를 AI와 사람이 함께 설계, 개발, 검증.</p></article>
+          <article class="card"><span class="num">02</span><h3>Amazon Quick</h3><p>회사 안의 데이터, 앱, 파일을 연결해 업무를 실행하는 AI 동료.</p></article>
+          <article class="card"><span class="num">03</span><h3>AWS Kiro</h3><p>프롬프트가 아니라 스펙을 기준으로 코드를 만드는 Agentic IDE.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="AI-DLC overview">
+      <div class="meta"><strong>KEYNOTE 01</strong><span>04 / 14</span></div>
+      <div class="canvas wide two-col">
+        <div class="stack">
+          <div class="eyebrow">가장 중요한 키워드</div>
+          <h2 class="keyword-title">
+            AI-DLC
+            <span class="subword">AI-Driven Development Lifecycle</span>
+          </h2>
+          <p class="lead">
+            AI-DLC는 “AI가 코드 몇 줄을 추천한다”가 아니라,
+            <span class="break">기획에서 개발, 테스트, 운영까지</span>
+            <span class="break">소프트웨어 개발 주기를 다시 짜는 방식이다.</span>
+          </p>
+        </div>
+        <div class="timeline">
+          <div class="step"><div class="label">요구사항</div><p>사람이 목표를 말하면 AI가 빠진 조건, 모순, 위험을 찾아낸다.</p></div>
+          <div class="step"><div class="label">설계</div><p>AI가 아키텍처와 데이터 흐름을 제안하고, 사람은 책임 있는 결정을 내린다.</p></div>
+          <div class="step"><div class="label">구현</div><p>AI가 반복 코딩과 테스트 초안을 만들고, 사람은 품질과 방향을 검증한다.</p></div>
+          <div class="step"><div class="label">운영</div><p>배포 후 장애, 보안, 비용을 에이전트가 함께 점검한다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="AI-DLC difference">
+      <div class="meta"><strong>AI-DLC DIFFERENCE</strong><span>05 / 14</span></div>
+      <div class="canvas wide stack">
+        <div class="stack" style="gap: 10px;">
+          <div class="eyebrow">기존 방식과 뭐가 다른가?</div>
+          <h2 class="title small">
+            <span class="break">예전에는 사람이 흐름을 다 쪼개고,</span>
+            <span class="break">AI는 옆에서 코드만 조금 도와줬다.</span>
+            <span class="break magenta">AI-DLC에서는 AI가 개발 흐름 자체를 함께 잡는다.</span>
+          </h2>
+        </div>
+        <div class="compare-grid">
+          <article class="compare">
+            <div class="label">Before · 보조 도구</div>
+            <h3>코딩 단계에서만 사용</h3>
+            <p>요구사항 정리, 설계, 테스트 계획은 사람이 따로 만들고, AI는 주로 자동완성이나 코드 설명에 머물렀다.</p>
+          </article>
+          <article class="compare after">
+            <div class="label">After · 개발 방법론</div>
+            <h3>전체 생명주기에 사용</h3>
+            <p>AI가 계획, 아키텍처, 구현, 테스트, 운영 점검을 이어서 돕고, 사람은 검증과 최종 판단을 맡는다.</p>
+          </article>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><b>2x</b><span>LG전자 MS사업본부는 AI-DLC 도입 후 생산성 2배 개선 사례로 소개됐다.</span></div>
+          <div class="metric"><b>3일</b><span>CJ OliveYoung은 3일 워크숍에서 5개 MVP를 완성한 사례로 언급됐다.</span></div>
+          <div class="metric"><b>9시간</b><span>Amazon Q Developer 고객 Alerce는 Java 현대화 작업을 3-4주에서 9시간으로 줄였다고 밝혔다.</span></div>
+        </div>
+        <p class="source">Source: News1/FNNews, Amazon Q Developer customer stories.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-title="AWS Kiro">
+      <div class="meta"><strong>KEYNOTE 02</strong><span>06 / 14</span></div>
+      <div class="canvas wide two-col reverse">
+        <div class="card-grid two">
+          <article class="card highlight"><h3>Spec First</h3><p>요구사항, 설계, 작업 목록을 먼저 만들고 코드로 들어간다.</p></article>
+          <article class="card"><h3>Viable Code</h3><p>빠른 프로토타입을 실제 운영 가능한 코드로 밀어붙이는 구조.</p></article>
+          <article class="card"><h3>Hooks</h3><p>테스트, 문서화, 규칙 확인 같은 반복 작업을 자동 실행.</p></article>
+          <article class="card"><h3>Steering</h3><p>팀의 코딩 규칙과 프로젝트 맥락을 AI가 계속 참고하게 한다.</p></article>
+        </div>
+        <div class="stack">
+          <div class="eyebrow">AWS Kiro</div>
+          <h2 class="keyword-title">
+            AWS Kiro
+            <span class="subword">Spec-driven Agentic IDE</span>
+          </h2>
+          <p class="lead">
+            Kiro는 “일단 만들어줘”가 아니라,
+            <span class="break">요구사항과 설계를 먼저 정리하고,</span>
+            <span class="break">그 스펙을 기준으로 코드와 테스트를 만드는 개발 도구다.</span>
+          </p>
+          <p class="source">Source: AWS Kiro documentation, Kiro FAQ, AWS Builder Center.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Amazon Quick">
+      <div class="meta"><strong>KEYNOTE 03</strong><span>07 / 14</span></div>
+      <div class="canvas wide two-col">
+        <div class="stack">
+          <div class="eyebrow">Amazon Quick</div>
+          <h2 class="keyword-title">
+            Amazon Quick
+            <span class="subword">Work AI Assistant</span>
+          </h2>
+          <p class="lead">
+            Quick은 회사 안에 흩어진 파일, 메일, 캘린더, Slack, CRM 데이터를 연결해서,
+            <span class="break">질문에 답하는 것을 넘어</span>
+            <span class="break">문서 작성, 요약, 후속 조치까지 실행하는 AI다.</span>
+          </p>
+        </div>
+        <div class="compare-grid">
+          <article class="compare">
+            <div class="label">Before</div>
+            <h3>앱 사이를 계속 이동</h3>
+            <p>메일을 보고, 파일을 찾고, Slack을 뒤지고, 다시 문서로 옮기는 시간이 쌓인다.</p>
+          </article>
+          <article class="compare after">
+            <div class="label">After</div>
+            <h3>일의 맥락을 한 곳에서 연결</h3>
+            <p>Quick이 데이터를 찾아 합성하고, 보고서 요약이나 레코드 업데이트 같은 반복 업무를 자동화한다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="3M Quick">
+      <div class="meta"><strong>3M CASE</strong><span>08 / 14</span></div>
+      <div class="canvas wide two-col">
+        <div class="stack">
+          <div class="eyebrow">실제 고객 사례 · 3M</div>
+          <h2 class="title">
+            <span class="break">3M은 영업 데이터가 여러 시스템에 흩어져 있어서,</span>
+            <span class="break magenta">Quick Suite로 인사이트를 합성하고 업무를 자동화한다.</span>
+          </h2>
+          <p class="lead">
+            공식 고객 사례에 따르면 3M은 영업 효과, 위험, 가격 관련 정보를 빠르게 합성하고,
+            <span class="break">Quick Flows로 보고서 요약과 레코드 업데이트 같은 행정 업무를 자동화한다.</span>
+          </p>
+          <p class="source">Source: Amazon Quick Suite customer story for 3M.</p>
+        </div>
+        <div class="timeline">
+          <div class="step"><div class="label">문제</div><p>영업팀이 여러 플랫폼과 시스템의 데이터를 따로 확인해야 했다.</p></div>
+          <div class="step"><div class="label">Quick</div><p>중요 정보를 빠르게 합성해 영업 효과, 위험, 가격 맥락을 정리한다.</p></div>
+          <div class="step"><div class="label">Flows</div><p>보고서 요약, 기록 업데이트 같은 반복 업무를 자동화한다.</p></div>
+          <div class="step"><div class="label">효과</div><p>팀이 행정 업무보다 파이프라인 진행과 기회 관리에 더 집중할 수 있다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Agentic AI">
+      <div class="meta"><strong>KEYNOTE 04</strong><span>09 / 14</span></div>
+      <div class="canvas wide two-col reverse">
+        <div class="metric-grid">
+          <div class="metric"><b>90%+</b><span>삼성 Account Platform은 AWS 기반 자율 운영 에이전트로 장애 복구 시간을 90% 이상 단축한 사례로 소개됐다.</span></div>
+          <div class="metric"><b>10분</b><span>장애를 빠르게 감지하고 복구하는 운영 에이전트 목표가 언급됐다.</span></div>
+          <div class="metric"><b>21억</b><span>삼성 Account Platform은 전 세계 21억 명 이상이 사용하는 플랫폼으로 보도됐다.</span></div>
+        </div>
+        <div class="stack">
+          <div class="eyebrow">Agentic AI</div>
+          <h2 class="title">
+            <span class="break">AI가 대답만 하는 도구에서,</span>
+            <span class="break magenta">업무를 수행하는 에이전트로 이동한다.</span>
+          </h2>
+          <p class="lead">
+            Upstage 김성훈 대표는 기업에서 에이전트를 바로 쓰기 어려운 이유로
+            <span class="break">재현 가능성, 설명 가능성, 오류 수정 가능한 프로세스를 강조했다.</span>
+          </p>
+          <p class="source">Source: ChosunBiz, News1/FNNews.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Physical AI">
+      <div class="meta"><strong>KEYNOTE 05</strong><span>10 / 14</span></div>
+      <div class="canvas wide two-col">
+        <div class="stack">
+          <div class="eyebrow">Physical AI</div>
+          <h2 class="title">
+            <span class="break">AI가 화면 안에서 끝나지 않고,</span>
+            <span class="break magenta">로봇과 제조 현장으로 확장된다.</span>
+          </h2>
+          <p class="lead">
+            함기호 AWS Korea 대표는 한국이 AI 칩 설계, 로봇 파운데이션 모델, 로봇 제조 생태계를 가진 나라라,
+            <span class="break">피지컬 AI에서 잠재력이 크다고 강조했다.</span>
+          </p>
+        </div>
+        <div class="timeline">
+          <div class="step"><div class="label">데이터</div><p>현장의 이미지, 센서, 운영 데이터를 모은다.</p></div>
+          <div class="step"><div class="label">학습</div><p>AWS 인프라 위에서 모델을 학습하고 실험한다.</p></div>
+          <div class="step"><div class="label">시뮬레이션</div><p>물리 세계에 적용하기 전 가상 환경에서 검증한다.</p></div>
+          <div class="step"><div class="label">엣지</div><p>현장 장비 가까이에서 빠르게 추론한다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Expo">
+      <div class="meta"><strong>EXPO HALL</strong><span>11 / 14</span></div>
+      <div class="canvas wide two-col reverse">
+        <div class="photo-card">
+          <img src="assets/images/summit-expo-map.jpg" alt="AWS Summit Seoul Expo Hall map">
+          <div class="photo-caption">Expo - Hall C map</div>
+        </div>
+        <div class="stack">
+          <div class="eyebrow">Expo에서 보인 흐름</div>
+          <h2 class="title small">
+            <span class="break">AI는 데모 영상이 아니라,</span>
+            <span class="break">라이브 커머스, 매장 분석, 제조, 보안 같은 실제 업무로 들어가고 있었다.</span>
+          </h2>
+          <ul class="list">
+            <li>Typecast는 AI 음성/영상 제작 데모로 실시간 반응형 가상 진행자를 보여줬다.</li>
+            <li>mAy-I는 CCTV 기반 방문객 흐름 분석을 시각화했고, ECS, S3, Bedrock 활용 사례로 보도됐다.</li>
+            <li>스타트업 존에는 AI 추론 클라우드, HR AI, 제조 AI, 보안, 리테일 분석 분야가 소개됐다.</li>
+          </ul>
+          <p class="source">Source: Donga.com AWS Summit Seoul 2026 startup zone report.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="My scenes">
+      <div class="meta"><strong>FIELD NOTES</strong><span>12 / 14</span></div>
+      <div class="canvas wide stack">
+        <div class="stack" style="gap: 10px;">
+          <div class="eyebrow">내가 찍은 사진으로 남은 장면</div>
+          <h2 class="title small">
+            <span class="break">이 발표의 톤은 공식 요약만이 아니라,</span>
+            <span class="break">현장에서 본 빛과 규모감을 기준으로 잡는다.</span>
+          </h2>
+        </div>
+        <div class="photo-strip">
+          <figure><img src="assets/images/summit-entrance.jpg" alt="AWS Summit entrance"><figcaption>입구: 행사 자체가 하나의 브랜드 경험</figcaption></figure>
+          <figure><img src="assets/images/summit-stage-icons.jpg" alt="AWS keynote stage"><figcaption>키노트: 도구와 서비스 아이콘이 무대 전체를 채움</figcaption></figure>
+          <figure><img src="assets/images/summit-expo-map.jpg" alt="Expo Hall map"><figcaption>Expo: 파트너와 고객 사례가 한 공간에 모임</figcaption></figure>
+        </div>
+        <div class="card-grid two">
+          <div class="placeholder"><div><b>부스 사진 필요</b>직접 체험한 부스 1 전경 또는 데모 화면</div></div>
+          <div class="placeholder"><div><b>부스 메모 필요</b>부스명, 본 기술, 신기했던 점, 한 문장 후기</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Build plan">
+      <div class="meta"><strong>BUILD PLAN</strong><span>13 / 14</span></div>
+      <div class="canvas wide stack">
+        <div class="stack" style="gap: 10px;">
+          <div class="eyebrow">그래서 이 PPT에 AWS를 어떻게 쓸까?</div>
+          <h2 class="title small">
+            <span class="break">보여주기식 백엔드보다,</span>
+            <span class="break magenta">발표 사이트를 실제로 배포하는 흐름부터 경험한다.</span>
+          </h2>
+        </div>
+        <div class="timeline">
+          <div class="step"><div class="label">GitHub</div><p>HTML, CSS, 이미지 파일을 저장소에 올리고 변경 이력을 관리한다.</p></div>
+          <div class="step"><div class="label">Amplify</div><p>AWS Amplify Hosting에 GitHub 저장소를 연결해 정적 사이트로 배포한다.</p></div>
+          <div class="step"><div class="label">Route 53</div><p>원하는 도메인을 AWS에서 구매하고 DNS를 연결한다. 도메인 등록비와 Hosted Zone 월 과금은 별도 확인한다.</p></div>
+          <div class="step"><div class="label">ACM/CDN</div><p>Amplify가 HTTPS 인증서와 CloudFront 기반 전송을 구성해 발표 링크를 안전하게 공유한다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide center" data-title="Closing">
+      <img class="photo-bg" src="assets/images/summit-build-together.jpg" alt="Let's build together screen">
+      <div class="shade"></div>
+      <div class="meta"><strong>CLOSING</strong><span>14 / 14</span></div>
+      <div class="canvas stack center">
+        <div class="eyebrow">Final Message</div>
+        <h2 class="display">
+          <span class="break">LET'S</span>
+          <span class="break magenta">BUILD</span>
+          <span class="break">TOGETHER</span>
+        </h2>
+        <p class="lead" style="max-width: 760px;">
+          AWS Summit에서 본 메시지는 단순했다.
+          <span class="break">좋은 도구를 보고 끝내지 않고,</span>
+          <span class="break">작게라도 직접 만들어서 올려보자.</span>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="nav" aria-label="Slide navigation">
+    <button type="button" id="prev" aria-label="Previous slide">‹</button>
+    <div class="counter" id="counter">01 / 14</div>
+    <button type="button" id="next" aria-label="Next slide">›</button>
+  </nav>
+  <div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.getElementById("counter");
+    const bar = document.getElementById("bar");
+    let current = 0;
+
+    function updateSlide(index) {
+      if (index < 0 || index >= slides.length) return;
+      slides[current].classList.remove("active");
+      current = index;
+      slides[current].classList.add("active");
+      counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
+      bar.style.width = `${((current + 1) / slides.length) * 100}%`;
+      document.title = `${slides[current].dataset.title} · AWS Summit Seoul 2026`;
+    }
+
+    function nextSlide() {
+      updateSlide(current + 1);
+    }
+
+    function previousSlide() {
+      updateSlide(current - 1);
+    }
+
+    document.getElementById("next").addEventListener("click", nextSlide);
+    document.getElementById("prev").addEventListener("click", previousSlide);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === " " || event.key === "PageDown") {
+        event.preventDefault();
+        nextSlide();
+      }
+
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        previousSlide();
+      }
+
+      if (event.key === "Home") updateSlide(0);
+      if (event.key === "End") updateSlide(slides.length - 1);
+
+      if (event.key === "f" || event.key === "F") {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>
