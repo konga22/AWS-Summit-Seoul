@@ -347,7 +347,7 @@
 
     .stat {
       display: grid;
-      grid-template-columns: 96px 1fr;
+      grid-template-columns: 128px 1fr;
       gap: 18px;
       align-items: center;
       padding: 16px 18px;
@@ -360,6 +360,7 @@
       font-size: 48px;
       line-height: 1;
       font-weight: 950;
+      white-space: nowrap;
     }
 
     .stat span {
@@ -656,20 +657,46 @@
       padding: 12px 14px;
     }
 
+    .kiro-live-ghost {
+      position: absolute;
+      left: -95px;
+      top: -135px;
+      z-index: 3;
+      width: 900px;
+      height: 900px;
+      opacity: 0.36;
+      pointer-events: none;
+      user-select: none;
+      transform: rotate(-12deg);
+    }
+
+    .kiro-live-ghost-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 180ms ease-out;
+      filter:
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.34))
+        drop-shadow(0 34px 80px rgba(255, 43, 214, 0.28));
+    }
+
+    .kiro-live-ghost-inner.is-flipped {
+      transform: translateX(-10%) scaleX(-1);
+    }
+
+    .kiro-lottie-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
     .kiro-mascot-card {
       min-height: 260px;
       padding: 22px;
       background:
         radial-gradient(circle at 78% 34%, rgba(255, 255, 255, 0.24), transparent 26%),
         linear-gradient(135deg, rgba(255, 43, 214, 0.28), rgba(91, 22, 255, 0.18) 52%, rgba(255, 255, 255, 0.06));
-    }
-
-    .kiro-mascot-card::before {
-      content: "";
-      position: absolute;
-      inset: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      pointer-events: none;
     }
 
     .kiro-ghost {
@@ -751,6 +778,71 @@
 
     .kiro-shot.compact {
       height: 144px;
+    }
+
+    .zoomable {
+      cursor: zoom-in;
+    }
+
+    .zoomable:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 4px;
+    }
+
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 48px;
+      background: rgba(5, 2, 13, 0.86);
+      backdrop-filter: blur(14px);
+    }
+
+    .image-lightbox[hidden] {
+      display: none;
+    }
+
+    .lightbox-panel {
+      position: relative;
+      width: min(1120px, 100%);
+      max-height: calc(100vh - 96px);
+      display: grid;
+      gap: 12px;
+    }
+
+    .lightbox-panel img {
+      width: 100%;
+      max-height: calc(100vh - 156px);
+      object-fit: contain;
+      display: block;
+      border: 1px solid var(--line);
+      background: #000;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+    }
+
+    .lightbox-caption {
+      margin: 0;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -18px;
+      right: -18px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(5, 2, 13, 0.92);
+      color: var(--white);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
     }
 
     .quick-explain-grid {
@@ -1404,6 +1496,31 @@
       .photo-card {
         height: 320px;
       }
+
+      .kiro-live-ghost {
+        left: -120px;
+        top: 8px;
+        width: 520px;
+        height: 520px;
+        opacity: 0.18;
+      }
+
+      .image-lightbox {
+        padding: 24px;
+      }
+
+      .lightbox-panel {
+        max-height: calc(100vh - 48px);
+      }
+
+      .lightbox-panel img {
+        max-height: calc(100vh - 112px);
+      }
+
+      .lightbox-close {
+        top: -10px;
+        right: -10px;
+      }
     }
   </style>
 </head>
@@ -1552,6 +1669,12 @@
     </section>
 
     <section class="slide" data-title="AWS Kiro">
+      <div class="kiro-live-ghost" aria-hidden="true">
+        <div class="kiro-live-ghost-inner">
+          <div class="kiro-lottie-layer" data-kiro-lottie="body"></div>
+          <div class="kiro-lottie-layer kiro-live-eyes-layer" data-kiro-lottie="eyes"></div>
+        </div>
+      </div>
       <div class="meta"><strong>KEYNOTE 02</strong><span>06 / 14</span></div>
       <div class="canvas wide two-col">
         <div class="stack">
@@ -1574,7 +1697,6 @@
         </div>
         <div class="kiro-visual-grid">
           <div class="kiro-mascot-card" aria-label="Kiro mascot character card">
-            <img class="kiro-ghost" src="assets/images/kiro-ghost.png" alt="Kiro ghost mascot">
             <div class="kiro-mascot-copy">
               <h3>귀엽지만,<span class="break magenta">일은 체계적으로.</span></h3>
               <p>
@@ -1588,16 +1710,16 @@
               </div>
             </div>
           </div>
-          <figure class="kiro-venn">
+          <figure class="kiro-venn zoomable" role="button" tabindex="0" aria-label="Kiro vibe coding and specs diagram 확대" data-zoom-src="assets/images/kiro-vibe-specs.png" data-zoom-caption="Vibe coding의 속도 + Specs의 명확함">
             <img src="assets/images/kiro-vibe-specs.png" alt="Kiro diagram connecting vibe coding and specs">
             <span>Vibe coding의 속도 + Specs의 명확함</span>
           </figure>
           <div class="kiro-mini-row">
-            <figure class="kiro-shot compact">
+            <figure class="kiro-shot compact zoomable" role="button" tabindex="0" aria-label="Kiro spec task list screenshot 확대" data-zoom-src="assets/images/kiro-spec-tasks.png" data-zoom-caption="Specs: 요구사항·설계·작업">
               <img src="assets/images/kiro-spec-tasks.png" alt="Kiro spec task list screenshot">
               <span>Specs: 요구사항·설계·작업</span>
             </figure>
-            <figure class="kiro-shot compact">
+            <figure class="kiro-shot compact zoomable" role="button" tabindex="0" aria-label="Kiro agent hooks screenshot 확대" data-zoom-src="assets/images/kiro-agent-hooks.png" data-zoom-caption="Hooks: 반복 작업 자동화">
               <img src="assets/images/kiro-agent-hooks.png" alt="Kiro agent hooks screenshot">
               <span>Hooks: 반복 작업 자동화</span>
             </figure>
@@ -1820,11 +1942,29 @@
   </nav>
   <div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div>
 
+  <div class="image-lightbox" id="image-lightbox" role="dialog" aria-modal="true" aria-label="이미지 확대" hidden>
+    <div class="lightbox-panel">
+      <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close image preview">×</button>
+      <img id="lightbox-image" src="" alt="">
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <script src="assets/vendor/lottie.min.js"></script>
+  <script src="assets/lottie/kiro-lottie-data.js"></script>
   <script>
     const slides = Array.from(document.querySelectorAll(".slide"));
     const counter = document.getElementById("counter");
     const bar = document.getElementById("bar");
+    const lightbox = document.getElementById("image-lightbox");
+    const lightboxImage = document.getElementById("lightbox-image");
+    const lightboxCaption = document.getElementById("lightbox-caption");
+    const lightboxClose = document.getElementById("lightbox-close");
+    const kiroLiveGhost = document.querySelector(".kiro-live-ghost");
+    const kiroLiveGhostInner = document.querySelector(".kiro-live-ghost-inner");
+    const kiroLiveEyesLayer = document.querySelector(".kiro-live-eyes-layer");
     let current = 0;
+    let ghostFrame = null;
 
     function updateSlide(index) {
       if (index < 0 || index >= slides.length) return;
@@ -1844,10 +1984,106 @@
       updateSlide(current - 1);
     }
 
+    function openLightbox(trigger) {
+      const image = trigger.querySelector("img");
+      lightboxImage.src = trigger.dataset.zoomSrc || image.src;
+      lightboxImage.alt = image.alt;
+      lightboxCaption.textContent = trigger.dataset.zoomCaption || "";
+      lightbox.hidden = false;
+      lightboxClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.hidden = true;
+      lightboxImage.src = "";
+    }
+
+    async function initKiroLottie() {
+      if (!window.lottie || !kiroLiveGhost) return;
+
+      const data = window.KIRO_LOTTIE || {};
+      const [bodyData, eyesData] = data.body && data.eyes
+        ? [data.body, data.eyes]
+        : await Promise.all([
+          fetch("assets/lottie/kiro-download-body.json").then((response) => response.json()),
+          fetch("assets/lottie/kiro-download-eyes.json").then((response) => response.json())
+        ]);
+
+      document.querySelectorAll("[data-kiro-lottie]").forEach((container) => {
+        window.lottie.loadAnimation({
+          container,
+          renderer: "svg",
+          loop: true,
+          autoplay: true,
+          animationData: container.dataset.kiroLottie === "body" ? bodyData : eyesData
+        });
+      });
+    }
+
+    function updateKiroGhost(clientX, clientY) {
+      if (!kiroLiveGhost || !kiroLiveGhostInner || !kiroLiveEyesLayer) return;
+
+      if (ghostFrame) cancelAnimationFrame(ghostFrame);
+      ghostFrame = requestAnimationFrame(() => {
+        const rect = kiroLiveGhost.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dx = clientX - centerX;
+        const dy = clientY - centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const isFlipped = clientX > centerX;
+        const eyeX = distance === 0 ? 0 : (dx / distance) * 20 * (isFlipped ? -1 : 1);
+        const eyeY = distance === 0 ? 0 : (dy / distance) * 15;
+
+        kiroLiveGhostInner.classList.toggle("is-flipped", isFlipped);
+        kiroLiveEyesLayer.style.transform = `translate(${eyeX.toFixed(1)}px, ${eyeY.toFixed(1)}px)`;
+      });
+    }
+
+    function resetKiroGhost() {
+      if (!kiroLiveGhostInner || !kiroLiveEyesLayer) return;
+      kiroLiveGhostInner.classList.remove("is-flipped");
+      kiroLiveEyesLayer.style.transform = "translate(0px, 0px)";
+    }
+
     document.getElementById("next").addEventListener("click", nextSlide);
     document.getElementById("prev").addEventListener("click", previousSlide);
 
+    document.querySelectorAll(".slide[data-title='AWS Kiro'] .zoomable").forEach((item) => {
+      item.addEventListener("click", () => openLightbox(item));
+      item.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openLightbox(item);
+        }
+      });
+    });
+
+    lightboxClose.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    function handleKiroGhostMove(event) {
+      updateKiroGhost(event.clientX, event.clientY);
+    }
+
+    window.addEventListener("pointermove", handleKiroGhostMove);
+    window.addEventListener("mousemove", handleKiroGhostMove);
+    window.addEventListener("pointerleave", resetKiroGhost);
+    window.addEventListener("mouseleave", resetKiroGhost);
+    window.addEventListener("blur", resetKiroGhost);
+
+    initKiroLottie().catch((error) => {
+      console.error("Kiro animation failed to load", error);
+    });
+
     document.addEventListener("keydown", (event) => {
+      if (!lightbox.hidden) {
+        if (event.key === "Escape") closeLightbox();
+        return;
+      }
+
       if (event.key === "ArrowRight" || event.key === " " || event.key === "PageDown") {
         event.preventDefault();
         nextSlide();
