@@ -858,6 +858,8 @@
     }
 
     .lightbox-panel img {
+      position: relative;
+      z-index: 1;
       width: 100%;
       max-height: calc(100vh - 156px);
       object-fit: contain;
@@ -865,9 +867,20 @@
       border: 1px solid var(--line);
       background: #000;
       box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+      cursor: zoom-in;
+      transition: transform 160ms ease;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .lightbox-panel img.is-dragging {
+      cursor: grabbing;
+      transition: none;
     }
 
     .lightbox-caption {
+      position: relative;
+      z-index: 3;
       margin: 0;
       color: var(--text);
       font-size: 15px;
@@ -880,6 +893,7 @@
       position: absolute;
       top: -18px;
       right: -18px;
+      z-index: 20;
       width: 42px;
       height: 42px;
       border: 1px solid rgba(255, 255, 255, 0.28);
@@ -2022,6 +2036,14 @@
     const kiroLiveEyesLayer = document.querySelector(".kiro-live-eyes-layer");
     let current = 0;
     let ghostFrame = null;
+    let lightboxScale = 1;
+    let lightboxOffsetX = 0;
+    let lightboxOffsetY = 0;
+    let isLightboxDragging = false;
+    let lightboxDragStartX = 0;
+    let lightboxDragStartY = 0;
+    let lightboxDragOriginX = 0;
+    let lightboxDragOriginY = 0;
 
     function getInitialSlide() {
       const requestedSlide = Number.parseInt(new URLSearchParams(window.location.search).get("slide"), 10);
@@ -2050,6 +2072,7 @@
     function openLightbox(trigger) {
       const image = trigger.querySelector("img");
       if (!image) return;
+      resetLightboxZoom();
       lightboxImage.src = trigger.dataset.zoomSrc || image.src;
       lightboxImage.alt = image.alt;
       lightboxCaption.textContent = getZoomCaption(trigger, image);
@@ -2060,6 +2083,70 @@
     function closeLightbox() {
       lightbox.hidden = true;
       lightboxImage.src = "";
+      resetLightboxZoom();
+    }
+
+    function resetLightboxZoom() {
+      lightboxScale = 1;
+      lightboxOffsetX = 0;
+      lightboxOffsetY = 0;
+      isLightboxDragging = false;
+      lightboxImage.classList.remove("is-dragging");
+      lightboxImage.style.transform = "translate(0px, 0px) scale(1)";
+      lightboxImage.style.transformOrigin = "center center";
+      lightboxImage.style.cursor = "zoom-in";
+    }
+
+    function adjustLightboxZoom(direction, event) {
+      const rect = lightboxImage.getBoundingClientRect();
+      const originX = ((event.clientX - rect.left) / rect.width) * 100;
+      const originY = ((event.clientY - rect.top) / rect.height) * 100;
+      lightboxImage.style.transformOrigin = `${originX.toFixed(1)}% ${originY.toFixed(1)}%`;
+
+      const nextScale = direction > 0
+        ? Math.min(lightboxScale + 0.35, 3.45)
+        : Math.max(lightboxScale - 0.35, 1);
+
+      lightboxScale = Number(nextScale.toFixed(2));
+      if (lightboxScale === 1) {
+        lightboxOffsetX = 0;
+        lightboxOffsetY = 0;
+      }
+      updateLightboxTransform();
+    }
+
+    function updateLightboxTransform() {
+      lightboxImage.style.transform = `translate(${lightboxOffsetX}px, ${lightboxOffsetY}px) scale(${lightboxScale})`;
+      lightboxImage.style.cursor = lightboxScale > 1 ? "grab" : "zoom-in";
+    }
+
+    function startLightboxDrag(event) {
+      if (lightboxScale <= 1 || event.button !== 0) return;
+      event.preventDefault();
+      event.stopPropagation();
+      isLightboxDragging = true;
+      lightboxDragStartX = event.clientX;
+      lightboxDragStartY = event.clientY;
+      lightboxDragOriginX = lightboxOffsetX;
+      lightboxDragOriginY = lightboxOffsetY;
+      lightboxImage.classList.add("is-dragging");
+      lightboxImage.setPointerCapture?.(event.pointerId);
+    }
+
+    function moveLightboxDrag(event) {
+      if (!isLightboxDragging) return;
+      event.preventDefault();
+      lightboxOffsetX = lightboxDragOriginX + event.clientX - lightboxDragStartX;
+      lightboxOffsetY = lightboxDragOriginY + event.clientY - lightboxDragStartY;
+      updateLightboxTransform();
+    }
+
+    function endLightboxDrag(event) {
+      if (!isLightboxDragging) return;
+      isLightboxDragging = false;
+      lightboxImage.classList.remove("is-dragging");
+      lightboxImage.releasePointerCapture?.(event.pointerId);
+      updateLightboxTransform();
     }
 
     async function initKiroLottie() {
@@ -2159,6 +2246,20 @@
     lightbox.addEventListener("click", (event) => {
       if (event.target === lightbox) closeLightbox();
     });
+    lightboxImage.addEventListener("click", (event) => {
+      if (isLightboxDragging) return;
+      event.stopPropagation();
+      adjustLightboxZoom(1, event);
+    });
+    lightboxImage.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      adjustLightboxZoom(-1, event);
+    });
+    lightboxImage.addEventListener("pointerdown", startLightboxDrag);
+    lightboxImage.addEventListener("pointermove", moveLightboxDrag);
+    lightboxImage.addEventListener("pointerup", endLightboxDrag);
+    lightboxImage.addEventListener("pointercancel", endLightboxDrag);
 
     function handleKiroGhostMove(event) {
       updateKiroGhost(event.clientX, event.clientY);
