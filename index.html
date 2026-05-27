@@ -431,6 +431,51 @@
       background: linear-gradient(0deg, rgba(5, 2, 13, 0.76), transparent 52%);
     }
 
+    .field-gallery {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field-gallery figure {
+      position: relative;
+      height: 144px;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .field-gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.13) contrast(1.05);
+      transform: scale(1.01);
+    }
+
+    .field-gallery figure::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(5, 2, 13, 0.78), transparent 58%);
+      pointer-events: none;
+    }
+
+    .field-gallery figcaption {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 9px;
+      z-index: 2;
+      color: var(--white);
+      font-size: 13px;
+      line-height: 1.15;
+      font-weight: 900;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
+    }
+
     .quote-block {
       padding: 28px;
       border-left: 5px solid var(--magenta);
@@ -1310,6 +1355,10 @@
         height: 190px;
       }
 
+      .field-gallery figure {
+        height: 118px;
+      }
+
       .keyword-title {
         font-size: 78px;
       }
@@ -1463,6 +1512,7 @@
       .card-grid.two,
       .card-grid.four,
       .photo-strip,
+      .field-gallery,
       .compare-grid,
       .metric-grid,
       .kiro-visual-grid,
@@ -1881,18 +1931,24 @@
         <div class="stack" style="gap: 10px;">
           <div class="eyebrow">내가 찍은 사진으로 남은 장면</div>
           <h2 class="title small">
-            <span class="break">이 발표의 톤은 공식 요약만이 아니라,</span>
-            <span class="break">현장에서 본 빛과 규모감을 기준으로 잡는다.</span>
+            <span class="break">발표에서 말로 풀어낼 현장 경험을</span>
+            <span class="break magenta">부스·체험·굿즈 사진으로 먼저 보여준다.</span>
           </h2>
         </div>
-        <div class="photo-strip">
-          <figure><img src="assets/images/summit-entrance.jpg" alt="AWS Summit entrance"><figcaption>입구: 행사 자체가 하나의 브랜드 경험</figcaption></figure>
-          <figure><img src="assets/images/summit-stage-icons.jpg" alt="AWS keynote stage"><figcaption>키노트: 도구와 서비스 아이콘이 무대 전체를 채움</figcaption></figure>
-          <figure><img src="assets/images/summit-expo-map.jpg" alt="Expo Hall map"><figcaption>Expo: 파트너와 고객 사례가 한 공간에 모임</figcaption></figure>
-        </div>
-        <div class="card-grid two">
-          <div class="placeholder"><div><b>부스 사진 필요</b>직접 체험한 부스 1 전경 또는 데모 화면</div></div>
-          <div class="placeholder"><div><b>부스 메모 필요</b>부스명, 본 기술, 신기했던 점, 한 문장 후기</div></div>
+        <div class="field-gallery">
+          <figure class="zoomable" data-zoom-caption="밥1"><img src="assets/images/field-notes/meal-1.jpg" alt="밥1"><figcaption>밥1</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="간식1"><img src="assets/images/field-notes/snack-1.jpg" alt="간식1"><figcaption>간식1</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="aws스킬게임1"><img src="assets/images/field-notes/aws-skill-game-1.jpg" alt="aws스킬게임1"><figcaption>aws스킬게임1</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="aws스킬게임2"><img src="assets/images/field-notes/aws-skill-game-2.jpg" alt="aws스킬게임2"><figcaption>aws스킬게임2</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="키로부스1"><img src="assets/images/field-notes/kiro-booth-1.jpg" alt="키로부스1"><figcaption>키로부스1</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="키로부스2"><img src="assets/images/field-notes/kiro-booth-2.jpg" alt="키로부스2"><figcaption>키로부스2</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="키로부스3"><img src="assets/images/field-notes/kiro-booth-3.jpg" alt="키로부스3"><figcaption>키로부스3</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="키로부스4"><img src="assets/images/field-notes/kiro-booth-4.jpg" alt="키로부스4"><figcaption>키로부스4</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="뉴빌리티부스1"><img src="assets/images/field-notes/neubility-booth-1.jpg" alt="뉴빌리티부스1"><figcaption>뉴빌리티부스1</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="뉴빌리티부스2"><img src="assets/images/field-notes/neubility-booth-2.jpg" alt="뉴빌리티부스2"><figcaption>뉴빌리티부스2</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="레드햇부스1"><img src="assets/images/field-notes/redhat-booth-1.jpg" alt="레드햇부스1"><figcaption>레드햇부스1</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="레드햇부스2"><img src="assets/images/field-notes/redhat-booth-2.jpg" alt="레드햇부스2"><figcaption>레드햇부스2</figcaption></figure>
+          <figure class="zoomable" data-zoom-caption="클라우드플레어부스1"><img src="assets/images/field-notes/cloudflare-booth-1.jpg" alt="클라우드플레어부스1"><figcaption>클라우드플레어부스1</figcaption></figure>
         </div>
       </div>
     </section>
